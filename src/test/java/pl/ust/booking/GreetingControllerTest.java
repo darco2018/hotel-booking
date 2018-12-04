@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package hello;
+package pl.ust.booking;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = GreetingController.class)
-public class ApplicationTest {
+public class GreetingControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +39,8 @@ public class ApplicationTest {
     @Test
     public void homePage() throws Exception {
         // N.B. jsoup can be useful for asserting HTML content
-        mockMvc.perform(get("/index.html"))
+        mockMvc.perform(get("/index.html").accept(MediaType.TEXT_HTML))   
+        		.andExpect(status().isOk())
                 .andExpect(content().string(containsString("Get your greeting")));
     }
 
@@ -49,8 +52,8 @@ public class ApplicationTest {
 
     @Test
     public void greetingWithUser() throws Exception {
-        mockMvc.perform(get("/greeting").param("name", "Greg"))
-                .andExpect(content().string(containsString("Hello, Greg!")));
+        mockMvc.perform(get("/greeting").param("name", "Darek"))
+                .andExpect(content().string(containsString("Hello, Darek!")));
     }
 
 }
