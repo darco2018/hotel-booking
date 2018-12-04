@@ -45,7 +45,7 @@ public class QuoteRequestControllerTest {
 		QuoteRequest quoteRequest = new QuoteRequest();
 		
 		mockMvc.perform(post("/newquote", quoteRequest))
-		.andExpect(status().is(201)) // 200 ?
+		.andExpect(status().is(200)) // 201 ?
 		.andReturn();		
 	}
 	
