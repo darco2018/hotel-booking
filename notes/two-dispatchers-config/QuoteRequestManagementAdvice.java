@@ -1,4 +1,4 @@
-package pl.ust.booking;
+package com.landonhotel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,28 +10,29 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import pl.ust.booking.contoller.QuoteRequestController;
-import pl.ust.booking.contoller.QuoteRequestManagementController;
+import com.landonhotel.eventsapp.controller.QuoteRequestController;
+import com.landonhotel.eventsapp.controller.QuoteRequestManagementController;
 
-// data formatting is consistent for both user roles: customer and sales rep
 @ControllerAdvice(assignableTypes = {
 		QuoteRequestController.class,
 		QuoteRequestManagementController.class
 })
-public class QuoteControllerRequestAdvice {
+public class QuoteRequestManagementAdvice {
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		
+		binder.registerCustomEditor(Date.class, 
+				new CustomDateEditor(dateFormat, false));;
+		
 	}
 	
-	// custom excpetion handling
-	// we could also use interceptors to do this
-	public ResponseEntity<String> handle(IOException ex){
-		// implement rules here
+	public ResponseEntity<String> handle(IOException ex) {
+		// implement some rules here
+		
 		return null;
+		
 	}
-
 }
