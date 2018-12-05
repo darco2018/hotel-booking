@@ -1,0 +1,54 @@
+What we've got here:
+- 2-dispatcher configuration (located in folder two-dispatchers-config
+- controller Advice
+- logging started in LoggerInterceptor
+- thymeleaf templates
+- SimpleDateFormat binder method in QuoteRequestManagementController
+- mode method  in QuoteRequestManagementController
+
+@SpringBootTest >> full app, real connections. you can use RestTemplate(or new alternative @TestRestTemplate). you can still use mocks
+
+@WebMvcTest(controllers = GreetingController.class) - only this contoller is tested, Tomcat not started; 
+     connections are mocked with @Autowired MockMvc perform;  any dependencies in controllers must be mocked
+
+@DataJpaTest - for repo layer
+
+@JsonTest - for JSON un/marshalling 
+
+@RestClientsTest - for testing REST clients
+
+----------------- @RequestParameter -------------------
+1.
+@GetMapping(path = "/quoteRequests", params = "eventType=wedding") 
+or params = "eventType"
+or params = "!eventType"
+
+2. 
+@GetMapping("/quoteRequests/{quoteId}")
+	public String viewQuoteRequest(@PathVariable int quoteId)
+	
+3.	
+@PostMapping("/quoteDetail")
+	public String updateQuoteRequest(@ModelAttribute QuoteRequest quoteform) 
+
+4.
+public String method9(@RequestParam("id") int id){
+
+RETURNS:
+-String(logical view name)
+-ModelAndView(View)
+-redirect/forward
+
+		if(someCondition) {
+			returnViewName = "redirect:/quoteRequest/wedding/{id}"; // go to different controller
+		}
+-@ResponseBody
+
+more
+https://www.journaldev.com/3358/spring-requestmapping-requestparam-pathvariable-example
+-----------WebMvcTest----------------------
+	
+mockMvc.perform(get("/quoteRequests")
+				.param("eventType", "wedding")
+				.accept(MediaType.TEXT_HTML))
+
